@@ -1,0 +1,47 @@
+// Generate a random number between 1 and 100
+const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+// Set the range of numbers the user can guess
+const minNumber = 1;
+const maxNumber = 100;
+
+// Initialize the number of guesses and the flag for whether the game is over
+let guesses = 0;
+let gameOver = false;
+
+// Get a reference to the input and button elements
+const input = document.querySelector('#guess');
+const button = document.querySelector('#submit');
+
+// Add an event listener to the button to handle user guesses
+button.addEventListener('click', () => {
+  // Ignore guesses if the game is over
+  if (gameOver) {
+    return;
+  }
+
+  // Get the user's guess and convert it to a number
+  const guess = parseInt(input.value);
+
+  // Validate the user's guess
+  if (isNaN(guess) || guess < minNumber || guess > maxNumber) {
+    alert(`Please enter a number between ${minNumber} and ${maxNumber}.`);
+    return;
+  }
+
+  // Increment the number of guesses
+  guesses++;
+
+  // Check if the user guessed the correct number
+  if (guess === randomNumber) {
+    alert(`Congratulations, you guessed the number in ${guesses} tries!`);
+    gameOver = true;
+  } else if (guess < randomNumber) {
+    alert(`Your guess is too low. Guesses so far: ${guesses}`);
+  } else {
+    alert(`Your guess is too high. Guesses so far: ${guesses}`);
+  }
+
+  // Clear the input field
+  input.value = '';
+});
